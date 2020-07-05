@@ -1,11 +1,11 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Default as Thing } from '../stories/Thing.stories';
+import { ButtonExample } from '../stories/Buttons.stories';
 
-describe('Thing', () => {
+describe('Paper', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Thing />, div);
+    ReactDOM.render(<ButtonExample id="btns" name="Buttons Example" />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 });

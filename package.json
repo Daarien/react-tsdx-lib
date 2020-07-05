@@ -1,23 +1,28 @@
 {
-  "version": "0.1.0",
+  "name": "react-tsdx-lib",
+  "version": "0.4.0",
   "license": "MIT",
+  "engines": {
+    "node": ">=13"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daarien/react-tsdx-lib.git"
+  },
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
-  "engines": {
-    "node": ">=13"
-  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "dev": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "release": "npm publish dist"
   },
   "peerDependencies": {
     "react": ">=16"
@@ -33,11 +38,10 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "react-tsdx-lib",
-  "author": "Daarien",
   "module": "dist/react-tsdx-lib.esm.js",
   "devDependencies": {
-    "@babel/core": "^7.10.3",
+    "@babel/core": "^7.10.4",
+    "@material-ui/core": "^4.11.0",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-docs": "^5.3.19",
     "@storybook/addon-info": "^5.3.19",
@@ -54,9 +58,11 @@
     "react-docgen-typescript-loader": "^3.7.2",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
+    "rollup-plugin-image-files": "^1.4.2",
     "ts-loader": "^7.0.5",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
-    "typescript": "^3.9.5"
-  }
+    "typescript": "^3.9.6"
+  },
+  "author": "Daarien"
 }

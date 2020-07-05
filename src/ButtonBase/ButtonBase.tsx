@@ -1,28 +1,99 @@
-import React, { ButtonHTMLAttributes, ComponentProps } from 'react';
-import styled, { css } from 'astroturf';
+import React, { ElementType, ButtonHTMLAttributes, RefAttributes } from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 import clsx from 'clsx';
 
-export interface ButtonBaseProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
+export type ButtonBaseClassKey = 'root' | 'disabled';
 
-// const BaseButton: StyledComponent<'button'> = styled.button`
-// const BaseButton = styled.button`
-// cursor: pointer;
-// font-size: 0.875rem;
-// transition: all 150ms ease-in-out;
-// `;
+export interface ButtonBaseProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  classes: Record<ButtonBaseClassKey, string>;
+  component?: ElementType;
+  href?: string;
+}
 
-const classes = css`
-  .buttonBase {
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: all 150ms ease-in-out;
+const ButtonBase = React.forwardRef(function ButtonBase(props: ButtonBaseProps, ref) {
+  const {
+    children,
+    classes,
+    className,
+    component = 'button',
+    type = 'button',
+    tabIndex = 0,
+    disabled,
+    ...other
+  } = props;
+  let Component = component;
+
+  if (Component === 'button' && other.href) {
+    Component = 'a';
   }
-`;
 
-// type ButtonBaseProps = ComponentProps<'button'>;
+  const buttonProps = {} as ButtonHTMLAttributes<HTMLButtonElement>;
+  if (Component === 'button') {
+    buttonProps.type = type;
+    buttonProps.disabled = disabled;
+  } else {
+    if (Component !== 'a' || !other.href) {
+      buttonProps.role = 'button';
+    }
+    buttonProps['aria-disabled'] = disabled;
+  }
 
-const ButtonBase = ({ children, className }: ButtonBaseProps) => {
-  return <button className={clsx(classes.buttonBase, className)}>{children}</button>;
-};
+  return (
+    <Component
+      className={clsx(
+        classes.root,
+        {
+          [classes.disabled]: disabled,
+        },
+        className
+      )}
+      ref={ref}
+      tabIndex={disabled ? -1 : tabIndex}
+      {...buttonProps}
+      {...other}
+    >
+      {children}
+    </Component>
+  );
+});
 
-export default ButtonBase;
+export default withStyles(
+  () => ({
+    /* Styles applied to the root element. */
+    root: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'relative',
+      WebkitTapHighlightColor: 'transparent',
+      backgroundColor: 'transparent', // Reset default value
+      // We disable the focus ring for mouse, touch and keyboard users.
+      outline: 0,
+      border: 0,
+      margin: 0, // Remove the margin in Safari
+      borderRadius: 0,
+      padding: 0, // Remove the padding in Firefox
+      cursor: 'pointer',
+      userSelect: 'none',
+      verticalAlign: 'middle',
+      '-moz-appearance': 'none', // Reset
+      '-webkit-appearance': 'none', // Reset
+      textDecoration: 'none',
+      // So we take precedent over the style of a native <a /> element.
+      color: 'inherit',
+      '&::-moz-focus-inner': {
+        borderStyle: 'none', // Remove Firefox dotted outline.
+      },
+      '&$disabled': {
+        pointerEvents: 'none', // Disable link interactions
+        cursor: 'default',
+      },
+      '@media print': {
+        colorAdjust: 'exact',
+      },
+    },
+    /* Pseudo-class applied to the root element if `disabled={true}`. */
+    disabled: {},
+  }),
+  { name: 'SuiButtonBase' }
+)(ButtonBase);
