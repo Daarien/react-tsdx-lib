@@ -1,9 +1,8 @@
-// eslint-ignore
-const images = require('rollup-plugin-image-files');
+const image = require('@rollup/plugin-image');
 
 module.exports = {
   rollup(config, options) {
-    config.plugins = [images({ incude: ['**/*.png', '**/*.svg'] }), ...config.plugins];
+    config.plugins = [image({ incude: ['**/*.svg'] }), ...config.plugins];
 
     return config;
   },

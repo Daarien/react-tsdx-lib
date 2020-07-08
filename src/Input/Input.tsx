@@ -6,10 +6,13 @@ import { Theme } from '../styles';
 import { Styles } from '@material-ui/styles/withStyles';
 import { StandardProps } from '..';
 
-export interface InputProps extends StandardProps<InputBaseProps, InputClassKey> {}
+export interface InputProps extends StandardProps<InputBaseProps, InputClassKey> {
+  variant?: 'default' | 'outlined';
+}
 
 type InputClassKey =
   | 'root'
+  | 'outlined'
   | 'formControl'
   | 'focused'
   | 'disabled'
@@ -23,16 +26,18 @@ type InputClassKey =
   | 'inputMultiline'
   | 'inputTypeSearch';
 
-export const styles: Styles<Theme, {}, InputClassKey> = () => {
+export const styles: Styles<Theme, {}, InputClassKey> = theme => {
   return {
     /* Styles applied to the root element. */
     root: {
       position: 'relative',
+      borderRadius: theme.shape.borderRadius,
     },
     /* Styles applied to the root element if the component is a descendant of `FormControl`. */
+    outlined: {},
     formControl: {
       'label + &': {
-        marginTop: 16,
+        marginTop: 4,
       },
     },
     /* Styles applied to the root element if the component is focused. */

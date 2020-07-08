@@ -1,11 +1,20 @@
 import React, { HTMLAttributes } from 'react';
+import clsx from 'clsx';
 import Input, { InputProps as StandardInputProps } from '../Input';
 import InputLabel, { InputLabelProps } from '../InputLabel';
 import FormHelperText, { FormHelperTextProps } from '../FormHelperText';
-import FormControl from '../FormControl';
+import FormControl, { FormControlProps } from '../FormControl';
+import { StandardProps } from '..';
+import withStyles from '../styles/withStyles';
+
+type TextFieldClassKey = 'root';
 
 export interface TextFieldProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onFocus' | 'onBlur' | 'onChange'> {
+  extends StandardProps<
+    HTMLAttributes<HTMLDivElement>,
+    TextFieldClassKey,
+    'defaultValue' | 'onFocus' | 'onBlur' | 'onChange'
+  > {
   autoComplete?: string;
   autoFocus?: boolean;
   defaultValue?: string | number;
@@ -69,12 +78,12 @@ export interface TextFieldProps
   inputProps?: StandardInputProps['inputProps'];
 }
 
-export default function TextField(props: TextFieldProps) {
+const TextField = React.forwardRef<HTMLDivElement, TextFieldProps>(function TextField(props, ref) {
   const {
+    classes,
+    className,
     autoComplete,
     autoFocus = false,
-    // children,
-    // className,
     defaultValue,
     variant,
     disabled = false,
@@ -107,12 +116,14 @@ export default function TextField(props: TextFieldProps) {
 
   return (
     <FormControl
+      className={clsx(classes.root, className)}
       disabled={disabled}
       error={error}
       fullWidth={fullWidth}
       required={required}
       variant={variant}
-      {...other}
+      ref={ref}
+      {...(other as FormControlProps)}
     >
       {label && (
         <InputLabel htmlFor={id} id={inputLabelId} {...InputLabelProps}>
@@ -148,4 +159,11 @@ export default function TextField(props: TextFieldProps) {
       )}
     </FormControl>
   );
-}
+});
+
+export default withStyles(
+  {
+    root: {},
+  },
+  { name: 'SuiTextField' }
+)(TextField);

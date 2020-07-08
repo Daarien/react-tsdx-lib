@@ -26,10 +26,11 @@ export interface InputBaseProps
    * The color of the component. It supports those theme colors that make sense for this component.
    */
   color?: 'primary' | 'secondary';
+  variant?: 'default' | 'outlined';
   /**
    * The default `input` element value. Use when the component is not controlled.
    */
-  defaultValue?: HTMLInputElement['value'];
+  defaultValue?: React.InputHTMLAttributes<HTMLInputElement>['value'];
   /**
    * If `true`, the `input` element will be disabled.
    */
@@ -151,6 +152,7 @@ export interface InputBaseComponentProps
 
 export type InputBaseClassKey =
   | 'root'
+  | 'outlined'
   | 'formControl'
   | 'focused'
   | 'disabled'

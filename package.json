@@ -1,9 +1,9 @@
 {
   "name": "react-tsdx-lib",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "license": "MIT",
   "engines": {
-    "node": ">=13"
+    "node": ">=12.18.2"
   },
   "repository": {
     "type": "git",
@@ -21,8 +21,7 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "dev": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "release": "npm publish dist"
+    "build-storybook": "build-storybook"
   },
   "peerDependencies": {
     "react": ">=16"
@@ -42,6 +41,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.4",
     "@material-ui/core": "^4.11.0",
+    "@rollup/plugin-image": "^2.0.5",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-docs": "^5.3.19",
     "@storybook/addon-info": "^5.3.19",
@@ -50,7 +50,6 @@
     "@storybook/react": "^5.3.19",
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
-    "astroturf": "^0.10.4",
     "babel-loader": "^8.1.0",
     "clsx": "^1.1.1",
     "husky": "^4.2.5",
@@ -58,7 +57,6 @@
     "react-docgen-typescript-loader": "^3.7.2",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
-    "rollup-plugin-image-files": "^1.4.2",
     "ts-loader": "^7.0.5",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
