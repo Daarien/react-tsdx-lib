@@ -4,6 +4,7 @@ import Input, { InputProps as StandardInputProps } from '../Input';
 import InputLabel, { InputLabelProps } from '../InputLabel';
 import FormHelperText, { FormHelperTextProps } from '../FormHelperText';
 import FormControl, { FormControlProps } from '../FormControl';
+import Select, { SelectProps } from '../Select';
 import { StandardProps } from '..';
 import withStyles from '../styles/withStyles';
 
@@ -43,9 +44,8 @@ export interface TextFieldProps
   required?: boolean;
   rows?: number;
   rowsMax?: string | number;
-  /**
-   * The size of the text field.
-   */
+  select?: boolean;
+  SelectProps?: Partial<SelectProps>;
   size?: 'small' | 'medium' | 'large';
   variant?: 'default' | 'outlined';
   /**
@@ -80,6 +80,7 @@ export interface TextFieldProps
 
 const TextField = React.forwardRef<HTMLDivElement, TextFieldProps>(function TextField(props, ref) {
   const {
+    children,
     classes,
     className,
     autoComplete,
@@ -104,6 +105,8 @@ const TextField = React.forwardRef<HTMLDivElement, TextFieldProps>(function Text
     required = false,
     rows,
     rowsMax,
+    select = false,
+    SelectProps,
     type,
     value,
     FormHelperTextProps,
@@ -113,6 +116,31 @@ const TextField = React.forwardRef<HTMLDivElement, TextFieldProps>(function Text
 
   const helperTextId = helperText && id ? `${id}-helper-text` : undefined;
   const inputLabelId = label && id ? `${id}-label` : undefined;
+
+  const InputElement = (
+    <Input
+      aria-describedby={helperTextId}
+      autoComplete={autoComplete}
+      autoFocus={autoFocus}
+      defaultValue={defaultValue}
+      fullWidth={fullWidth}
+      multiline={multiline}
+      name={name}
+      rows={rows}
+      rowsMax={rowsMax}
+      type={type}
+      value={value}
+      id={id}
+      inputRef={inputRef}
+      onBlur={onBlur}
+      onChange={onChange}
+      onFocus={onFocus}
+      placeholder={placeholder}
+      disabled={disabled}
+      inputProps={inputProps}
+      {...InputProps}
+    />
+  );
 
   return (
     <FormControl
@@ -130,28 +158,21 @@ const TextField = React.forwardRef<HTMLDivElement, TextFieldProps>(function Text
           {label}
         </InputLabel>
       )}
-      <Input
-        aria-describedby={helperTextId}
-        autoComplete={autoComplete}
-        autoFocus={autoFocus}
-        defaultValue={defaultValue}
-        fullWidth={fullWidth}
-        multiline={multiline}
-        name={name}
-        rows={rows}
-        rowsMax={rowsMax}
-        type={type}
-        value={value}
-        id={id}
-        inputRef={inputRef}
-        onBlur={onBlur}
-        onChange={onChange}
-        onFocus={onFocus}
-        placeholder={placeholder}
-        disabled={disabled}
-        inputProps={inputProps}
-        {...InputProps}
-      />
+      {select ? (
+        <Select
+          aria-describedby={helperTextId}
+          id={id}
+          labelId={inputLabelId}
+          value={value}
+          input={InputElement}
+          {...SelectProps}
+        >
+          {children}
+        </Select>
+      ) : (
+        InputElement
+      )}
+
       {helperText && (
         <FormHelperText id={helperTextId} {...FormHelperTextProps}>
           {helperText}

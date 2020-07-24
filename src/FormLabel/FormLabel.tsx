@@ -39,6 +39,7 @@ const FormLabel = React.forwardRef(function FormLabel(props: FormLabelProps, ref
   } = props;
 
   const formControl = useFormControl();
+  console.log('FormLabel -> formControl', formControl);
   const fcs = formControlState({
     props,
     formControl,

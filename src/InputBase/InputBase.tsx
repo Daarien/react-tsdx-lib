@@ -81,7 +81,6 @@ const InputBase = React.forwardRef<HTMLDivElement, InputBaseProps>(function Inpu
   });
 
   fcs.focused = formControl ? formControl.focused : focused;
-  console.log('inputBase fcs', fcs.focused);
 
   // The blur won't fire when the disabled state is set on a focused input.
   // We need to book keep the focused state manually.

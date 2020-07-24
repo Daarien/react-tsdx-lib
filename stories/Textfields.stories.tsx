@@ -1,14 +1,32 @@
 import React, { useState, ChangeEvent } from 'react';
-import { Grid, Box, Typography } from '@material-ui/core';
+import { Grid, Box, Typography, MenuItem } from '@material-ui/core';
 import { makeStyles, styled } from '@material-ui/core/styles';
 import { Paper, Input, TextField } from '../src';
 import { StoryProps } from './types';
 
 export default {
-  title: 'Textfields',
+  title: 'TextFields',
 };
 
-export const TextfieldsExample = ({ id, name }: StoryProps) => {
+enum Option {
+  road = 'road',
+  tree = 'tree',
+  mountain = 'mountain',
+}
+
+export const TextFieldsExample = ({ id, name }: StoryProps) => {
+  const [value, setValue] = useState('Contolled TextField');
+  const [option, setOption] = useState(Option.road);
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    setValue(e.target.value);
+  }
+
+  function handleSelect(e: ChangeEvent<HTMLInputElement>) {
+    const { value, name } = e.target;
+    setOption(value as Option);
+  }
+
   return (
     <Paper id={id}>
       <Typography variant="h4">{name}</Typography>
@@ -24,7 +42,7 @@ export const TextfieldsExample = ({ id, name }: StoryProps) => {
         <Grid container>
           <Box m={3}>
             <TextField
-              label="Textfield label"
+              label="TextField label"
               helperText="helper text"
               placeholder="placeholer"
               variant="outlined"
@@ -32,7 +50,7 @@ export const TextfieldsExample = ({ id, name }: StoryProps) => {
           </Box>
           <Box m={3}>
             <TextField
-              label="Textfield label"
+              label="TextField label"
               helperText="helper text"
               placeholder="placeholer"
               value="error state"
@@ -42,7 +60,7 @@ export const TextfieldsExample = ({ id, name }: StoryProps) => {
           </Box>
           <Box m={3}>
             <TextField
-              label="Textfield label"
+              label="TextField label"
               helperText="helper text"
               placeholder="placeholer"
               value="disabled state"
@@ -52,9 +70,38 @@ export const TextfieldsExample = ({ id, name }: StoryProps) => {
           </Box>
         </Grid>
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <Box m={3}>
               <TextField fullWidth value="full width" label="label" />
+            </Box>
+          </Grid>
+          <Grid item xs={2}>
+            <Box m={3}>
+              <TextField
+                label="Controlled TextField"
+                helperText="helper text"
+                placeholder="placeholer"
+                variant="outlined"
+                value={value}
+                onChange={handleChange}
+              />
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item xs={3}>
+            <Box m={3}>
+              <TextField
+                select
+                label="Selectable TextField"
+                value={option}
+                onChange={handleSelect}
+                helperText="TextField with options"
+              >
+                <MenuItem value={Option.road}>{Option.road}</MenuItem>
+                <MenuItem value={Option.tree}>{Option.tree}</MenuItem>
+                <MenuItem value={Option.mountain}>{Option.mountain}</MenuItem>
+              </TextField>
             </Box>
           </Grid>
         </Grid>

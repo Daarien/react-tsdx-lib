@@ -8,6 +8,8 @@ import {
   ClassKeyOfStyles,
 } from '@material-ui/styles/withStyles';
 
+export type {Styles} from '@material-ui/styles/withStyles';
+
 export type WithStyles<
   StylesOrClassKey extends string | Styles<any, any, any> = string,
   IncludeTheme extends boolean | undefined = false

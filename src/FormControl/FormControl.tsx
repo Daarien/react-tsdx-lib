@@ -1,14 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Theme } from '@material-ui/core/styles';
-import withStyles, { Styles } from '@material-ui/core/styles/withStyles';
+import withStyles from '../styles/withStyles';
 import FormControlContext from './FormControlContext';
 import { isFilled, isAdornedStart } from '../InputBase/utils';
 import isMuiElement from '../utils/isMuiElement';
+import { StandardProps } from '..';
 
 export type FormControlClassKey = 'root' | 'fullWidth';
 
-export interface FormControlProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface FormControlProps
+  extends StandardProps<React.HTMLAttributes<HTMLDivElement>, FormControlClassKey> {
   disabled?: boolean;
   error?: boolean;
   focused?: boolean;
@@ -17,10 +18,12 @@ export interface FormControlProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'outlined';
   size?: 'small' | 'medium' | 'large';
   component?: React.ElementType;
-  classes: Record<FormControlClassKey, string>;
 }
 
-const FormControl = React.forwardRef(function FormControl(props: FormControlProps, ref) {
+const FormControl = React.forwardRef<HTMLDivElement, FormControlProps>(function FormControl(
+  props,
+  ref
+) {
   const {
     children,
     className,
@@ -109,33 +112,24 @@ const FormControl = React.forwardRef(function FormControl(props: FormControlProp
   );
 });
 
-const styles: Styles<Theme, FormControlProps> = {
-  /* Styles applied to the root element. */
-  root: {
-    display: 'inline-flex',
-    flexDirection: 'column',
-    position: 'relative',
-    // Reset fieldset default style.
-    minWidth: 0,
-    padding: 0,
-    margin: 0,
-    border: 0,
-    verticalAlign: 'top', // Fix alignment issue on Safari.
+export default withStyles(
+  {
+    /* Styles applied to the root element. */
+    root: {
+      display: 'inline-flex',
+      flexDirection: 'column',
+      position: 'relative',
+      // Reset fieldset default style.
+      minWidth: 0,
+      padding: 0,
+      margin: 0,
+      border: 0,
+      verticalAlign: 'top', // Fix alignment issue on Safari.
+    },
+    /* Styles applied to the root element if `fullWidth={true}`. */
+    fullWidth: {
+      width: '100%',
+    },
   },
-  /* Styles applied to the root element if `margin="normal"`. */
-  marginNormal: {
-    marginTop: 16,
-    marginBottom: 8,
-  },
-  /* Styles applied to the root element if `margin="dense"`. */
-  marginDense: {
-    marginTop: 8,
-    marginBottom: 4,
-  },
-  /* Styles applied to the root element if `fullWidth={true}`. */
-  fullWidth: {
-    width: '100%',
-  },
-};
-
-export default withStyles(styles, { name: 'SuiFormControl' })(FormControl);
+  { name: 'SuiFormControl' }
+)(FormControl);

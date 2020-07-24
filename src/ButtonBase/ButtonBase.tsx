@@ -1,11 +1,12 @@
-import React, { ElementType, ButtonHTMLAttributes, RefAttributes } from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
+import React, { ElementType, ButtonHTMLAttributes } from 'react';
 import clsx from 'clsx';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { StandardProps } from '..';
 
 export type ButtonBaseClassKey = 'root' | 'disabled';
 
-export interface ButtonBaseProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  classes: Record<ButtonBaseClassKey, string>;
+export interface ButtonBaseProps
+  extends StandardProps<ButtonHTMLAttributes<HTMLButtonElement>, ButtonBaseClassKey> {
   component?: ElementType;
   href?: string;
 }
@@ -21,6 +22,7 @@ const ButtonBase = React.forwardRef(function ButtonBase(props: ButtonBaseProps, 
     disabled,
     ...other
   } = props;
+
   let Component = component;
 
   if (Component === 'button' && other.href) {

@@ -1,10 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
 import withStyles from '../styles/withStyles';
-// import withStyles from '@material-ui/core/styles/withStyles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import ButtonBase, { ButtonBaseProps } from '../ButtonBase';
 import capitalize from '../utils/capitalize';
+import { StandardProps } from '..';
 
 export type ButtonClassKey =
   | 'root'
@@ -34,8 +34,7 @@ export type ButtonClassKey =
   | 'iconSizeMedium'
   | 'iconSizeLarge';
 
-export interface ButtonProps extends ButtonBaseProps {
-  classes: Record<ButtonClassKey, string>;
+export interface ButtonProps extends StandardProps<ButtonBaseProps, ButtonClassKey> {
   fullWidth?: boolean;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
@@ -49,6 +48,7 @@ const Button = React.forwardRef(function Button(props: ButtonProps, ref) {
     className,
     classes,
     fullWidth,
+
     startIcon: startIconProp,
     endIcon: endIconProp,
     component = 'button',
@@ -111,7 +111,7 @@ export default withStyles(
       padding: '6px 16px',
       borderRadius: theme.shape.borderRadius,
       color: theme.palette.text.primary,
-      transition: theme.transitions.create(['background-color', 'box-shadow', 'border'], {
+      transition: theme.transitions.create(['background-color', 'box-shadow', 'border', 'color'], {
         duration: theme.transitions.duration.short,
       }),
       '&:hover': {
@@ -150,6 +150,9 @@ export default withStyles(
           backgroundColor: 'transparent',
         },
       },
+      '&$disabled': {
+        color: theme.palette.primary.light,
+      },
     },
     /* Styles applied to the root element if `variant="text"` and `color="secondary"`. */
     textSecondary: {
@@ -183,6 +186,10 @@ export default withStyles(
         '@media (hover: none)': {
           backgroundColor: 'transparent',
         },
+      },
+      '&$disabled': {
+        color: theme.palette.primary.light,
+        borderColor: theme.palette.primary.light,
       },
     },
     /* Styles applied to the root element if `variant="outlined"` and `color="secondary"`. */
@@ -240,6 +247,10 @@ export default withStyles(
         '@media (hover: none)': {
           backgroundColor: theme.palette.primary.main,
         },
+      },
+      '&$disabled': {
+        color: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.primary.light,
       },
     },
     /* Styles applied to the root element if `variant="contained"` and `color="secondary"`. */

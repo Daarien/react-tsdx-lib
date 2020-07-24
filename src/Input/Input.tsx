@@ -1,9 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import InputBase, { InputBaseProps } from '../InputBase';
-import withStyles from '../styles/withStyles';
+import withStyles, { Styles } from '../styles/withStyles';
 import { Theme } from '../styles';
-import { Styles } from '@material-ui/styles/withStyles';
 import { StandardProps } from '..';
 
 export interface InputProps extends StandardProps<InputBaseProps, InputClassKey> {
@@ -65,7 +64,7 @@ export const styles: Styles<Theme, {}, InputClassKey> = theme => {
   };
 };
 
-const Input = React.forwardRef<HTMLDivElement, InputProps>(function Input(props: InputProps, ref) {
+const Input = React.forwardRef<HTMLDivElement, InputProps>(function Input(props, ref) {
   const {
     classes,
     fullWidth = false,

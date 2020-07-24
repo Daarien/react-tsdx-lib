@@ -4,7 +4,7 @@ import { withStyles, Theme } from '@material-ui/core/styles';
 import { StyleRules } from '@material-ui/styles/withStyles';
 import clsx from 'clsx';
 
-type TabClassKey = 'root' | 'selected' | 'fullWidth' | 'vertical';
+type TabClassKey = 'root' | 'label' | 'selected' | 'fullWidth' | 'vertical';
 
 export interface ButtonTabProps extends Omit<ButtonBaseProps, 'onChange' | 'classes'> {
   value: any;
@@ -63,21 +63,21 @@ const ButtonTab = React.forwardRef<HTMLButtonElement, ButtonTabProps>(function B
 
 const styles = (theme: Theme): StyleRules => ({
   root: {
-    maxWidth: 264,
     minWidth: 72,
+    maxWidth: 264,
     position: 'relative',
     boxSizing: 'border-box',
-    minHeight: 48,
     flexShrink: 0,
-    lineHeight: 1.5,
     color: '#6c6c6c',
     backgroundColor: 'white',
-    // padding: theme.spacing(1.25, 2),
     overflow: 'hidden',
     whiteSpace: 'normal',
+    fontSize: '0.875rem',
+    padding: theme.spacing(1.5, 2),
     marginRight: theme.spacing(1.5),
     borderRadius: theme.shape.borderRadius,
   },
+  label: {},
   selected: {
     color: 'white',
     backgroundColor: '#222222',

@@ -1,9 +1,9 @@
 import React from 'react';
 import setRef from './setRef';
 
-export default function useForkRef<T>(
-  refA: ((instance: T | null) => void) | React.RefObject<T> | null | undefined,
-  refB: ((instance: T | null) => void) | React.RefObject<T> | null | undefined
+export default function useForkRef(
+  refA: ((instance: any | null) => void) | React.RefObject<any> | null | undefined,
+  refB: ((instance: any | null) => void) | React.RefObject<any> | null | undefined
 ) {
   /**
    * This will create a new function if the ref props change and are defined.

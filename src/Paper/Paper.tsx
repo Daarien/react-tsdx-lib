@@ -1,13 +1,11 @@
-import React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-// import withStyles from '../styles/withStyles';
+import React, { HTMLAttributes } from 'react';
 import clsx from 'clsx';
+import withStyles from '../styles/withStyles';
+import { StandardProps } from '..';
 
 export type PaperClassKey = 'root';
 
-export interface PaperProps extends React.HTMLAttributes<HTMLDivElement> {
-  classes: Record<PaperClassKey, string>;
-}
+export interface PaperProps extends StandardProps<HTMLAttributes<HTMLDivElement>, PaperClassKey> {}
 
 function Paper({ children, className, classes, ...other }: PaperProps) {
   return (
@@ -21,10 +19,11 @@ export default withStyles(
   theme => {
     return {
       root: {
-        boxShadow:
-          '0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12)',
+        boxShadow: theme.shadows[1],
         borderRadius: theme.shape.borderRadius,
-        padding: '1rem',
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
+        transition: theme.transitions.create('box-shadow'),
       },
     };
   },
